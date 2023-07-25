@@ -1,173 +1,46 @@
-[![Blitz.js](https://raw.githubusercontent.com/blitz-js/art/master/github-cover-photo.png)](https://blitzjs.com)
+# Getting Started with Create React App
 
-This is a [Blitz.js](https://github.com/blitz-js/blitz) app.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-# ****name****
+## Available Scripts
 
-## Getting Started
+In the project directory, you can run:
 
-Run your app in the development mode.
+### `npm start`
 
-```
-blitz dev
-```
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-## Environment Variables
+### `npm test`
 
-Ensure the `.env.local` file has required environment variables:
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-```
-DATABASE_URL=postgresql://<YOUR_DB_USERNAME>@localhost:5432/doggo-front
-```
+### `npm run build`
 
-Ensure the `.env.test.local` file has required environment variables:
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-```
-DATABASE_URL=postgresql://<YOUR_DB_USERNAME>@localhost:5432/doggo-front_test
-```
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-## Tests
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-Runs your tests using Jest.
+### `npm run eject`
 
-```
-yarn test
-```
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-Blitz comes with a test setup using [Vitest](https://vitest.dev/) and [react-testing-library](https://testing-library.com/).
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-## Commands
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-Blitz comes with a powerful CLI that is designed to make development easy and fast. You can install it with `npm i -g blitz`
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-```
-  blitz [COMMAND]
+## Learn More
 
-  dev       Start a development server
-  build     Create a production build
-  start     Start a production server
-  export    Export your Blitz app as a static application
-  prisma    Run prisma commands
-  generate  Generate new files for your Blitz project
-  console   Run the Blitz console REPL
-  install   Install a recipe
-  help      Display help for blitz
-  test      Run project tests
-```
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-You can read more about it on the [CLI Overview](https://blitzjs.com/docs/cli-overview) documentation.
-
-## What's included?
-
-Here is the starting structure of your app.
-
-```
-doggo-front
-├── src/
-│   ├── api/
-│   ├── auth/
-│   │   ├── components/
-│   │   │   ├── LoginForm.tsx
-│   │   │   └── SignupForm.tsx
-│   │   ├── mutations/
-│   │   │   ├── changePassword.ts
-│   │   │   ├── forgotPassword.test.ts
-│   │   │   ├── forgotPassword.ts
-│   │   │   ├── login.ts
-│   │   │   ├── logout.ts
-│   │   │   ├── resetPassword.test.ts
-│   │   │   ├── resetPassword.ts
-│   │   │   └── signup.ts
-│   │   ├── pages/
-│   │   │   ├── forgot-password.tsx
-│   │   │   ├── login.tsx
-│   │   │   ├── reset-password.tsx
-│   │   │   └── signup.tsx
-│   │   └── validations.ts
-│   ├── core/
-│   │   ├── components/
-│   │   │   ├── Form.tsx
-│   │   │   └── LabeledTextField.tsx
-│   │   └── layouts/
-│   │       └── Layout.tsx
-│   ├── pages/
-│   │   ├── _app.tsx
-│   │   ├── _document.tsx
-│   │   ├── 404.tsx
-│   │   ├── index.test.tsx
-│   │   └── index.tsx
-│   └── users/
-│       ├── hooks/
-│       │   └── useCurrentUser.ts
-│       └── queries/
-│           └── getCurrentUser.ts
-├── db/
-│   ├── migrations/
-│   ├── index.ts
-│   ├── schema.prisma
-│   └── seeds.ts
-├── integrations/
-├── mailers/
-│   └── forgotPasswordMailer.ts
-├── public/
-│   ├── favicon.ico
-│   └── logo.png
-├── test/
-│   ├── setup.ts
-│   └── utils.tsx
-├── .eslintrc.js
-├── babel.config.js
-├── blitz.config.ts
-├── vitest.config.ts
-├── package.json
-├── README.md
-├── tsconfig.json
-└── types.ts
-```
-
-These files are:
-
-- The `src/` folder is a container for most of your project. This is where you’ll put any pages or API routes.
-
-- `db/` is where your database configuration goes. If you’re writing models or checking migrations, this is where to go.
-
-- `public/` is a folder where you will put any static assets. If you have images, files, or videos which you want to use in your app, this is where to put them.
-
-- `integrations/` is a folder to put all third-party integrations like with Stripe, Sentry, etc.
-
-- `test/` is a folder where you can put test utilities and integration tests.
-
-- `package.json` contains information about your dependencies and devDependencies. If you’re using a tool like `npm` or `yarn`, you won’t have to worry about this much.
-
-- `tsconfig.json` is our recommended setup for TypeScript.
-
-- `.babel.config.js`, `.eslintrc.js`, `.env`, etc. ("dotfiles") are configuration files for various bits of JavaScript tooling.
-
-- `blitz.config.ts` is for advanced custom configuration of Blitz. [Here you can learn how to use it](https://blitzjs.com/docs/blitz-config).
-
-- `vitest.config.ts` contains config for Vitest tests. You can [customize it if needed](https://vitejs.dev/config/).
-
-You can read more about it in the [File Structure](https://blitzjs.com/docs/file-structure) section of the documentation.
-
-### Tools included
-
-Blitz comes with a set of tools that corrects and formats your code, facilitating its future maintenance. You can modify their options and even uninstall them.
-
-- **ESLint**: It lints your code: searches for bad practices and tell you about it. You can customize it via the `.eslintrc.js`, and you can install (or even write) plugins to have it the way you like it. It already comes with the [`blitz`](https://github.com/blitz-js/blitz/tree/canary/packages/eslint-config) config, but you can remove it safely. [Learn More](https://blitzjs.com/docs/eslint-config).
-- **Husky**: It adds [githooks](https://git-scm.com/docs/githooks), little pieces of code that get executed when certain Git events are triggerd. For example, `pre-commit` is triggered just before a commit is created. You can see the current hooks inside `.husky/`. If are having problems commiting and pushing, check out ther [troubleshooting](https://typicode.github.io/husky/#/?id=troubleshoot) guide. [Learn More](https://blitzjs.com/docs/husky-config).
-- **Prettier**: It formats your code to look the same everywhere. You can configure it via the `.prettierrc` file. The `.prettierignore` contains the files that should be ignored by Prettier; useful when you have large files or when you want to keep a custom formatting. [Learn More](https://blitzjs.com/docs/prettier-config).
-
-## Learn more
-
-Read the [Blitz.js Documentation](https://blitzjs.com/docs/getting-started) to learn more.
-
-The Blitz community is warm, safe, diverse, inclusive, and fun! Feel free to reach out to us in any of our communication channels.
-
-- [Website](https://blitzjs.com)
-- [Discord](https://blitzjs.com/discord)
-- [Report an issue](https://github.com/blitz-js/blitz/issues/new/choose)
-- [Forum discussions](https://github.com/blitz-js/blitz/discussions)
-- [How to Contribute](https://blitzjs.com/docs/contributing)
-- [Sponsor or donate](https://github.com/blitz-js/blitz#sponsors-and-donations)
+To learn React, check out the [React documentation](https://reactjs.org/).
