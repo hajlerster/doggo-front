@@ -4,7 +4,7 @@ import axios from "axios";
 
 type GatewayPageProps = {
     children: React.ReactNode
-    enpoint =: string
+    enpoint : string
     location: string
 
 
