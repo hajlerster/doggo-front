@@ -26,6 +26,7 @@ interface CheckboxCardProps {
 
     title: React.ReactNode;
     description: React.ReactNode;
+    error?: React.ReactNode;
 }
 
 export function CheckboxCard({
@@ -35,6 +36,7 @@ export function CheckboxCard({
                                  title,
                                  description,
                                  className,
+                                 error,
                                  ...others
                              }: CheckboxCardProps & Omit<React.ComponentPropsWithoutRef<'button'>, keyof CheckboxCardProps>) {
     const {classes, cx} = useStyles();
@@ -47,29 +49,40 @@ export function CheckboxCard({
     });
 
     return (
-        <UnstyledButton
-            {...others}
-            onClick={() => handleChange(!value)}
-            className={cx(classes.button, className)}
-        >
-            <Checkbox
-                checked={value}
-                onChange={() => {
-                }}
-                tabIndex={-1}
-                size="md"
-                mr="xl"
-                styles={{input: {cursor: 'pointer'}}}
-            />
+        <>
+            <UnstyledButton
+                {...others}
+                onClick={() => handleChange(!value)}
+                className={cx(classes.button, className)}
+            >
+                <Checkbox
+                    checked={value}
+                    onChange={() => {
+                    }}
+                    tabIndex={-1}
+                    size="md"
+                    mr="xl"
+                    styles={{input: {cursor: 'pointer'}}}
+                />
 
-            <div>
-                <Text fw={500} mb={7} sx={{lineHeight: 1}}>
-                    {title}
+                <div>
+                    <Text fw={500} mb={7} sx={{lineHeight: 1}}>
+                        {title}
+                    </Text>
+                    <Text fz="sm" c="dimmed">
+                        {description}
+                    </Text>
+                </div>
+
+            </UnstyledButton>
+
+            {error && (
+                <Text color="red" mt={5}>
+                    {error}
                 </Text>
-                <Text fz="sm" c="dimmed">
-                    {description}
-                </Text>
-            </div>
-        </UnstyledButton>
+            )
+            }
+        </>
+
     );
 }

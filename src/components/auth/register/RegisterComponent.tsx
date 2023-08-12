@@ -1,6 +1,143 @@
 import {Anchor, Button, createStyles, Paper, PasswordInput, rem, Text, TextInput, Title,} from '@mantine/core';
 import {CheckboxCard} from "../../common/CheckboxCard";
 import {NavLink} from "react-router-dom";
+import {useForm} from "@mantine/form";
+import axios from "axios";
+
+
+export function RegisterComponent() {
+    const {classes} = useStyles();
+    const form = useForm({
+        initialValues: {
+            firstName: '',
+            lastName: '',
+            email: '',
+            isPatron: false,
+            isOwner: false,
+            password: '',
+        },
+
+        // functions will be used to validate values at corresponding key
+        validate: {
+            firstName: (value) => (value.length < 2 ? 'Imię musi mieć conajmniej dwa znaki' : null),
+            lastName: (value) => (value.length < 2 ? 'Nazwisko musi mieć conajmniej dwa znaki' : null),
+            email: (value) => (
+                value && /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value)
+                    ? null : 'Niewłaściwy email'),
+            password: (value) => (value.length < 6 ? 'Hasło musi mieć conajmniej 6 znaków' : null),
+            isPatron: (value, allValues) => (value === true || allValues.isOwner === true ? null : 'Musisz wybrać przynajmniej jedną opcję'),
+            isOwner: (value, allValues) => (value === true || allValues.isPatron === true ? null : 'Musisz wybrać przynajmniej jedną opcję'),
+
+        },
+
+    });
+
+    async function handleSubmit(values: any) {
+        try {
+
+            const postData = {
+                firstName: values.firstName,
+                lastName: values.lastName,
+                name: values.firstName + ' ' + values.lastName,
+                email: values.email,
+                username: values.email,
+                password: values.password,
+                iAmPetPatron: values.isPatron,
+                iAmPetOwner: values.isOwner,
+            }
+            console.log(postData)
+            let response = await axios.post("http://localhost:3000/api/v1/auth/register", postData);
+
+            console.log(response.data);
+            
+        } catch (error) {
+            // Jeżeli odpowiedź od serwera jest błędna, możesz tutaj potraktować błąd...
+            console.error('Błąd:', error);
+        }
+    }
+
+
+    return (
+        <div className={classes.wrapper}>
+            <Paper className={classes.form} radius={0} p={30}>
+                <form onSubmit={form.onSubmit(values => handleSubmit(values))}>
+                    <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
+                        Zarabiaj lub oszczędzaj czas. <br/> Z nami to proste!
+                    </Title>
+
+                    <TextInput label="Imię"
+                               placeholder="Twoje imię"
+                               size="md"
+                               name={'firstName'}
+                               {...form.getInputProps('firstName')}
+
+                    />
+                    <TextInput
+                        label="Nazwisko"
+                        placeholder="Twoje nazwisko"
+                        mt="md"
+                        size="md"
+                        name={'lastName'}
+                        {...form.getInputProps('lastName')}
+                    />
+
+                    <TextInput
+                        label="Adres email"
+                        placeholder="kochamPsiaki@gmail.com"
+                        mt="md"
+                        size="md"
+                        name={'email'}
+                        {...form.getInputProps('email')}
+
+                    />
+                    <PasswordInput
+                        label="Hasło"
+                        placeholder="Twoje hasło"
+                        mt="md"
+                        size="md"
+                        name={'password'}
+                        {...form.getInputProps('password')}
+                    />
+
+                    <Text color="gray.3" mt="md">Musisz zaznaczyć conajmniej jedną opcję</Text>
+                    <CheckboxCard title={'Zostań patronem'}
+                                  description={'Zarabiaj na opiece nad psami. Opiekuj się nimi w domu lub na spacerze.'}
+                                  className={classes.marginTopCard}
+                                  name={'isPatron'}
+                                  {...form.getInputProps('isPatron')}
+                    />
+
+                    <CheckboxCard title={'Mam swojego pupila'}
+                                  description={'Powierz go w opiekę innym i oszczędzaj czas.'}
+                                  className={classes.marginTopCard}
+                                  name={'isOwner'}
+                                  {...form.getInputProps('isOwner')}
+                    />
+
+                    <Button
+                        fullWidth mt="xl"
+                        size="md"
+                        type="submit"
+                        variant="gradient"
+
+                    >
+                        Zarejestruj się
+                    </Button>
+                </form>
+                <Text ta="center" mt="md">
+                    Masz już konto?{' '}
+                    <Anchor weight={700}>
+                        <NavLink to={'/login'}>
+                            Zaloguj się
+                        </NavLink>
+                    </Anchor>
+                </Text>
+
+            </Paper>
+        </div>
+    );
+}
+
 
 const useStyles = createStyles((theme) => ({
     wrapper: {
@@ -34,43 +171,3 @@ const useStyles = createStyles((theme) => ({
 
     }
 }));
-
-export function RegisterComponent() {
-    const {classes} = useStyles();
-    return (
-        <div className={classes.wrapper}>
-            <Paper className={classes.form} radius={0} p={30}>
-                <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
-                    Zarabiaj lub oszczędzaj czas. <br/> Z nami to proste!
-                </Title>
-
-                <TextInput label="Imię" placeholder="Twoje imię" size="md"/>
-                <TextInput label="Nazwisko" placeholder="Twoje nazwisko" mt="md" size="md"/>
-
-                <TextInput label="Adres email" placeholder="kochamPsiaki@gmail.com" mt="md" size="md"/>
-                <PasswordInput label="Password" placeholder="Twoje hasło" mt="md" size="md"/>
-
-                <Text color="gray.3" mt="md">Musisz zaznaczyć conajmniej jedną opcję</Text>
-                <CheckboxCard title={'Zostań patronem'}
-                              description={'Zarabiaj na opiece nad psami. Opiekuj się nimi w domu lub na spacerze.'}
-                              className={classes.marginTopCard}/>
-
-                <CheckboxCard title={'Mam swojego pupila'} description={'Powierz go w opiekę innym i oszczędzaj czas.'}
-                              className={classes.marginTopCard}/>
-
-                <Button fullWidth mt="xl" size="md">
-                    Zarejestruj się
-                </Button>
-
-                <Text ta="center" mt="md">
-                    Masz już konto?{' '}
-                    <Anchor weight={700}>
-                        <NavLink to={'/login'}>
-                            Zaloguj się
-                        </NavLink>
-                    </Anchor>
-                </Text>
-            </Paper>
-        </div>
-    );
-}
